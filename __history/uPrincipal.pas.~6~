@@ -1,0 +1,70 @@
+unit uPrincipal;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ComCtrls, Vcl.ExtCtrls;
+
+type
+  TfrmPrincipal = class(TForm)
+    GroupBox1: TGroupBox;
+    edtemail: TLabeledEdit;
+    edtsenha: TLabeledEdit;
+    GroupBox2: TGroupBox;
+    edtcnpj: TLabeledEdit;
+    GroupBox3: TGroupBox;
+    pgcFuncoes: TPageControl;
+    tdStatus: TTabSheet;
+    tbGeracao: TTabSheet;
+    GroupBox4: TGroupBox;
+    edthash: TLabeledEdit;
+    btnconsultar: TButton;
+    Memo1: TMemo;
+    LabeledEdit6: TLabeledEdit;
+    Button2: TButton;
+    GroupBox5: TGroupBox;
+    Memo2: TMemo;
+    procedure btnconsultarClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frmPrincipal: TfrmPrincipal;
+
+implementation
+
+uses
+  sngpc;
+
+{$R *.dfm}
+
+procedure TfrmPrincipal.btnconsultarClick(Sender: TObject);
+var
+  statusdoenvio:string;
+  email,senha,cnpj, hash:string;
+begin
+
+  email:=edtemail.Text;
+  senha:=edtsenha.Text;
+  cnpj:=edtcnpj.Text;
+  hash:=edthash.Text;
+
+  if (email<>'') and (senha<>'') and (cnpj<>'') and (hash<>'') then
+  Begin
+    statusdoenvio:= GetsngpcSoap.ConsultaDadosArquivoSNGPC(email,senha, cnpj, hash);
+    Memo1.Lines.Clear;
+    Memo1.Lines.Text:=statusdoenvio;
+  End
+  else
+  begin
+    Memo1.Lines.Clear;
+    Memo1.Lines.Text:='Confira o preenchimento dos campos acima!';
+  end;
+
+end;
+
+end.

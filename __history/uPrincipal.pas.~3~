@@ -1,0 +1,42 @@
+unit uPrincipal;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ComCtrls, Vcl.ExtCtrls;
+
+type
+  TfrmPrincipal = class(TForm)
+    GroupBox1: TGroupBox;
+    LabeledEdit1: TLabeledEdit;
+    LabeledEdit2: TLabeledEdit;
+    LabeledEdit3: TLabeledEdit;
+    GroupBox2: TGroupBox;
+    LabeledEdit4: TLabeledEdit;
+    GroupBox3: TGroupBox;
+    pgcFuncoes: TPageControl;
+    tdStatus: TTabSheet;
+    tbGeracao: TTabSheet;
+    GroupBox4: TGroupBox;
+    LabeledEdit5: TLabeledEdit;
+    Button1: TButton;
+    Memo1: TMemo;
+    LabeledEdit6: TLabeledEdit;
+    Button2: TButton;
+    GroupBox5: TGroupBox;
+    Memo2: TMemo;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frmPrincipal: TfrmPrincipal;
+
+implementation
+
+{$R *.dfm}
+
+end.

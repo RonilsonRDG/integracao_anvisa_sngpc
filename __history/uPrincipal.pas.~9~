@@ -1,0 +1,140 @@
+unit uPrincipal;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ComCtrls, Vcl.ExtCtrls,
+  system.types,System.Zip,System.Math,IdHashMessageDigest;
+type
+  TfrmPrincipal = class(TForm)
+    GroupBox1: TGroupBox;
+    edtemail: TLabeledEdit;
+    edtsenha: TLabeledEdit;
+    GroupBox2: TGroupBox;
+    edtcnpj: TLabeledEdit;
+    GroupBox3: TGroupBox;
+    pgcFuncoes: TPageControl;
+    tdStatus: TTabSheet;
+    tbGeracao: TTabSheet;
+    GroupBox4: TGroupBox;
+    edthash: TLabeledEdit;
+    btnconsultar: TButton;
+    Memo1: TMemo;
+    edtarquivo: TLabeledEdit;
+    btnselecionar: TButton;
+    GroupBox5: TGroupBox;
+    Memo2: TMemo;
+    btnenviar: TButton;
+    procedure btnconsultarClick(Sender: TObject);
+    procedure btnenviarClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frmPrincipal: TfrmPrincipal;
+
+implementation
+
+uses
+  sngpc;
+
+{$R *.dfm}
+
+function MD5(const fileName : string) : string;
+var
+  idmd5 : TIdHashMessageDigest5;
+  fs : TFileStream;
+begin
+  idmd5 := TIdHashMessageDigest5.Create;
+
+  fs := TFileStream.Create(fileName, fmOpenRead OR fmShareDenyWrite) ;
+  try
+    result := idmd5.HashStreamAsHex(fs);
+  finally
+    fs.Free;
+    idmd5.Free;
+  end;
+end;
+
+function FIleToByteArray( const FileName : string ) : TByteDynArray;
+const BLOCK_SIZE=1024;
+var BytesRead, BytesToWrite, Count : integer;
+ F : File of Byte;
+ pTemp : Pointer;
+begin
+   AssignFile( F, FileName );
+   Reset(F);
+  try
+   Count := FileSize( F );
+   SetLength(Result, Count );
+   pTemp := @Result[0];
+   BytesRead := BLOCK_SIZE;
+   while (BytesRead = BLOCK_SIZE ) do
+   begin
+    BytesToWrite := Min(Count, BLOCK_SIZE);
+    BlockRead(F, pTemp^, BytesToWrite , BytesRead );
+     pTemp := Pointer(LongInt(pTemp) + BLOCK_SIZE);
+    Count := Count-BytesRead;
+   end;
+  finally
+    CloseFile( F );
+   end;
+end;
+
+procedure TfrmPrincipal.btnconsultarClick(Sender: TObject);
+var
+  statusdoenvio:string;
+  email,senha,cnpj, hash:string;
+begin
+
+  email:=edtemail.Text;
+  senha:=edtsenha.Text;
+  cnpj:=edtcnpj.Text;
+  hash:=edthash.Text;
+
+  if (email<>'') and (senha<>'') and (cnpj<>'') and (hash<>'') then
+  Begin
+    statusdoenvio:= GetsngpcSoap.ConsultaDadosArquivoSNGPC(email,senha, cnpj, hash);
+    Memo1.Lines.Clear;
+    Memo1.Lines.Text:=statusdoenvio;
+  End
+  else
+  begin
+    Memo1.Lines.Clear;
+    Memo1.Lines.Text:='Confira o preenchimento dos campos acima!';
+  end;
+
+end;
+
+procedure TfrmPrincipal.btnenviarClick(Sender: TObject);
+var
+  ZipFile: TZipFile;
+  email,senha,hash,retorno:string;
+begin
+
+  email:=edtemail.Text;
+  senha:=edtsenha.Text;
+
+  //Cria uma instância da classe TZipFile
+  ZipFile := TZipFile.Create;
+  try
+    // Indica o diretório e nome do arquivo Zip que será criado
+    ZipFile.Open('\sngpc.zip', zmWrite);
+    // Compacta os arquivos
+    ZipFile.Add(edtarquivo.Text);
+  finally
+    // Libera o objeto da memória
+    ZipFile.Free;
+  end;
+
+  hash:=MD5('\sngpc.zip');
+
+  retorno:=GetsngpcSoap.EnviaArquivoSNGPC(email,senha,FIleToByteArray('\sngpc.zip'),hash);
+
+end;
+
+end.

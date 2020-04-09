@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<mensagemSNGPC xmlns="urn:sngpc-schema"><cabecalho><cnpjEmissor>CNPJ_DA_FARMACIA</cnpjEmissor><cpfTransmissor>CPF_DO_RT</cpfTransmissor><dataInicio>2020-04-03</dataInicio><dataFim>2020-04-08</dataFim></cabecalho><corpo><medicamentos/><insumos/></corpo></mensagemSNGPC>

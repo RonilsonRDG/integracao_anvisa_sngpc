@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2020/04/08 12:25:28.000.212,=C:\Users\Ronilson\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2020/04/08 12:26:44.000.437,C:\Users\Ronilson\Documents\Embarcadero\Studio\Projects\Unit1.pas=D:\Programação\Delphi\Projetos\Integração SNGPC - Anvisa\uPrincipal.pas</Transaction>
+    <Transaction>2020/04/08 12:26:44.000.437,C:\Users\Ronilson\Documents\Embarcadero\Studio\Projects\Unit1.dfm=D:\Programação\Delphi\Projetos\Integração SNGPC - Anvisa\uPrincipal.dfm</Transaction>
+    <Transaction>2020/04/08 12:26:57.000.490,C:\Users\Ronilson\Documents\Embarcadero\Studio\Projects\Project1.dproj=D:\Programação\Delphi\Projetos\Integração SNGPC - Anvisa\integraSngpc.dproj</Transaction>
+    <Transaction>2020/04/08 16:50:38.000.883,=D:\Programação\Delphi\Projetos\Integração SNGPC - Anvisa\sngpc.pas</Transaction>
+  </Transactions>
+</BorlandProject>
